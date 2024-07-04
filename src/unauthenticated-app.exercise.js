@@ -1,38 +1,44 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
+import { jsx } from "@emotion/core";
 
-import * as React from 'react'
-import {Input, Button, Spinner, FormGroup, ErrorMessage} from './components/lib'
-import {Modal, ModalContents, ModalOpenButton} from './components/modal'
-import {Logo} from './components/logo'
-// 🐨 get AuthContext from ./context/auth-context
-import {useAsync} from './utils/hooks'
+import * as React from "react";
+import {
+  Input,
+  Button,
+  Spinner,
+  FormGroup,
+  ErrorMessage,
+} from "./components/lib";
+import { Modal, ModalContents, ModalOpenButton } from "./components/modal";
+import { Logo } from "./components/logo";
+import { useAuth } from "context/auth-context";
+import { useAsync } from "./utils/hooks";
 
-function LoginForm({onSubmit, submitButton}) {
-  const {isLoading, isError, error, run} = useAsync()
+function LoginForm({ onSubmit, submitButton }) {
+  const { isLoading, isError, error, run } = useAsync();
   function handleSubmit(event) {
-    event.preventDefault()
-    const {username, password} = event.target.elements
+    event.preventDefault();
+    const { username, password } = event.target.elements;
 
     run(
       onSubmit({
         username: username.value,
         password: password.value,
-      }),
-    )
+      })
+    );
   }
 
   return (
     <form
       onSubmit={handleSubmit}
       css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        '> div': {
-          margin: '10px auto',
-          width: '100%',
-          maxWidth: '300px',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        "> div": {
+          margin: "10px auto",
+          width: "100%",
+          maxWidth: "300px",
         },
       }}
     >
@@ -47,40 +53,39 @@ function LoginForm({onSubmit, submitButton}) {
       <div>
         {React.cloneElement(
           submitButton,
-          {type: 'submit'},
+          { type: "submit" },
           ...(Array.isArray(submitButton.props.children)
             ? submitButton.props.children
             : [submitButton.props.children]),
-          isLoading ? <Spinner css={{marginLeft: 5}} /> : null,
+          isLoading ? <Spinner css={{ marginLeft: 5 }} /> : null
         )}
       </div>
       {isError ? <ErrorMessage error={error} /> : null}
     </form>
-  )
+  );
 }
 
-// you'll no longer receive the login and register functions as props
-// 💣 remove the props
-function UnauthenticatedApp({login, register}) {
-  // 🐨 get login and register from the AuthContext using useContext
+function UnauthenticatedApp() {
+  const { login, register } = useAuth();
+
   return (
     <div
       css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100vh',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: "100vh",
       }}
     >
       <Logo width="80" height="80" />
       <h1>Bookshelf</h1>
       <div
         css={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-          gridGap: '0.75rem',
+          display: "grid",
+          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+          gridGap: "0.75rem",
         }}
       >
         <Modal>
@@ -107,7 +112,7 @@ function UnauthenticatedApp({login, register}) {
         </Modal>
       </div>
     </div>
-  )
+  );
 }
 
-export {UnauthenticatedApp}
+export { UnauthenticatedApp };

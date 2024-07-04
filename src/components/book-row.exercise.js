@@ -1,29 +1,28 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
+import { jsx } from "@emotion/core";
 
-import {Link} from 'react-router-dom'
-import {useListItem} from 'utils/list-items'
-import * as mq from 'styles/media-queries'
-import * as colors from 'styles/colors'
-import {StatusButtons} from './status-buttons'
-import {Rating} from './rating'
+import { Link } from "react-router-dom";
+import { useListItem } from "utils/list-items";
+import * as mq from "styles/media-queries";
+import * as colors from "styles/colors";
+import { StatusButtons } from "./status-buttons";
+import { Rating } from "./rating";
 
-// 💣 remove the user prop
 // the children components that needed it can get it from context
-function BookRow({user, book}) {
-  const {title, author, coverImageUrl} = book
+function BookRow({ book }) {
+  const { title, author, coverImageUrl } = book;
 
-  const listItem = useListItem(book.id)
+  const listItem = useListItem(book.id);
 
-  const id = `book-row-book-${book.id}`
+  const id = `book-row-book-${book.id}`;
 
   return (
     <div
       css={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        position: 'relative',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        position: "relative",
       }}
     >
       <Link
@@ -32,17 +31,17 @@ function BookRow({user, book}) {
         css={{
           minHeight: 270,
           flexGrow: 2,
-          display: 'grid',
-          gridTemplateColumns: '140px 1fr',
+          display: "grid",
+          gridTemplateColumns: "140px 1fr",
           gridGap: 20,
           border: `1px solid ${colors.gray20}`,
           color: colors.text,
-          padding: '1.25em',
-          borderRadius: '3px',
-          ':hover,:focus': {
-            textDecoration: 'none',
-            boxShadow: '0 5px 15px -5px rgba(0,0,0,.08)',
-            color: 'inherit',
+          padding: "1.25em",
+          borderRadius: "3px",
+          ":hover,:focus": {
+            textDecoration: "none",
+            boxShadow: "0 5px 15px -5px rgba(0,0,0,.08)",
+            color: "inherit",
           },
         }}
       >
@@ -57,36 +56,30 @@ function BookRow({user, book}) {
           <img
             src={coverImageUrl}
             alt={`${title} book cover`}
-            css={{maxHeight: '100%', width: '100%'}}
+            css={{ maxHeight: "100%", width: "100%" }}
           />
         </div>
-        <div css={{flex: 1}}>
-          <div css={{display: 'flex', justifyContent: 'space-between'}}>
-            <div css={{flex: 1}}>
+        <div css={{ flex: 1 }}>
+          <div css={{ display: "flex", justifyContent: "space-between" }}>
+            <div css={{ flex: 1 }}>
               <h2
                 id={id}
                 css={{
-                  fontSize: '1.25em',
-                  margin: '0',
+                  fontSize: "1.25em",
+                  margin: "0",
                   color: colors.indigo,
                 }}
               >
                 {title}
               </h2>
-              {listItem?.finishDate ? (
-                <Rating
-                  // 💣 remove the user prop here
-                  user={user}
-                  listItem={listItem}
-                />
-              ) : null}
+              {listItem?.finishDate ? <Rating listItem={listItem} /> : null}
             </div>
-            <div css={{marginLeft: 10}}>
+            <div css={{ marginLeft: 10 }}>
               <div
                 css={{
-                  marginTop: '0.4em',
-                  fontStyle: 'italic',
-                  fontSize: '0.85em',
+                  marginTop: "0.4em",
+                  fontStyle: "italic",
+                  fontSize: "0.85em",
                 }}
               >
                 {author}
@@ -94,31 +87,27 @@ function BookRow({user, book}) {
               <small>{book.publisher}</small>
             </div>
           </div>
-          <small css={{whiteSpace: 'break-spaces', display: 'block'}}>
+          <small css={{ whiteSpace: "break-spaces", display: "block" }}>
             {book.synopsis.substring(0, 500)}...
           </small>
         </div>
       </Link>
       <div
         css={{
-          marginLeft: '20px',
-          position: 'absolute',
+          marginLeft: "20px",
+          position: "absolute",
           right: -20,
           color: colors.gray80,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          height: '100%',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          height: "100%",
         }}
       >
-        <StatusButtons
-          // 💣 remove the user prop here
-          user={user}
-          book={book}
-        />
+        <StatusButtons book={book} />
       </div>
     </div>
-  )
+  );
 }
 
-export {BookRow}
+export { BookRow };
