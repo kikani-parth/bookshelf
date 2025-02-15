@@ -84,8 +84,36 @@ export async function getBooks(req: Request, res: Response) {
     const result = await pool.query('SELECT * FROM books WHERE user_id = $1', [
       userId,
     ]);
+
+    if (result.rows.length === 0) {
+      res.status(404).json({ error: 'Books not found' });
+      return;
+    }
+
     res.status(200).json(result.rows);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch books' });
+  }
+}
+
+export async function deleteBook(req: Request, res: Response) {
+  const { userId } = res.locals.user;
+  const { id } = req.params; // this is book's id
+
+  try {
+    const result = await pool.query(
+      'DELETE FROM books WHERE id = $1 AND user_id = $2',
+      [id, userId]
+    );
+
+    if (result.rowCount === 0) {
+      res
+        .status(404)
+        .json({ error: 'Book not found or unauthorized to delete' });
+      return;
+    }
+    res.status(200).json({ message: 'Book deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete book' });
   }
 }
