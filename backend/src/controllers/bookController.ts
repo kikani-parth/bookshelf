@@ -76,3 +76,16 @@ export async function addBook(req: Request, res: Response) {
     res.status(500).json({ error: 'Failed to add book' });
   }
 }
+
+export async function getBooks(req: Request, res: Response) {
+  const { userId } = res.locals.user;
+
+  try {
+    const result = await pool.query('SELECT * FROM books WHERE user_id = $1', [
+      userId,
+    ]);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch books' });
+  }
+}

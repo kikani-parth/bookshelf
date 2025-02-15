@@ -11,7 +11,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
 
   try {
     const decoded = verifyToken(token);
-    res.locals.user = decoded; // Attach the decoded user to the request object
+    res.locals.user = decoded;
 
     // req.user = decoded; // Attach the decoded user to the request object
     next();
