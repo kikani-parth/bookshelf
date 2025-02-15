@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import pool from './config/db';
 import authRoutes from './routes/authRoutes';
+import bookRoutes from './routes/bookRoutes';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+app.use('/api/books', bookRoutes);
 
 // Test route
 app.get('/', (req, res) => {
