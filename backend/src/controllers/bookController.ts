@@ -1,8 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { Request, Response } from 'express';
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import pool from '../config/db';
 
 const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
 
@@ -51,5 +51,28 @@ export async function searchBooks(req: Request, res: Response) {
     // res.status(200).json(response.data.items);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch books' });
+  }
+}
+
+export async function addBook(req: Request, res: Response) {
+  //   const { userId } = req.user;
+  const { userId } = res.locals.user;
+
+  const { title, author, description, coverImage, publishedDate } = req.body;
+
+  if (!title || !author) {
+    res.status(400).json({ error: 'Title and author are required' });
+    return;
+  }
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO books (user_id, title, author, description, cover_image_url, published_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [userId, title, author, description, coverImage, publishedDate]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to add book' });
   }
 }
