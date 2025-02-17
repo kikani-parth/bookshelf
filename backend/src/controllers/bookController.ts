@@ -98,7 +98,7 @@ export async function getBooks(req: Request, res: Response) {
 
 export async function deleteBook(req: Request, res: Response) {
   const { userId } = res.locals.user;
-  const { id } = req.params; // this is book's id
+  const { id } = req.params; // book id
 
   try {
     const result = await pool.query(
@@ -107,9 +107,7 @@ export async function deleteBook(req: Request, res: Response) {
     );
 
     if (result.rowCount === 0) {
-      res
-        .status(404)
-        .json({ error: 'Book not found or unauthorized to delete' });
+      res.status(404).json({ error: 'Book not found' });
       return;
     }
     res.status(200).json({ message: 'Book deleted successfully' });
