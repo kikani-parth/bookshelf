@@ -1,10 +1,8 @@
-import axios from 'axios';
-
-const API_URL = 'https://91bd-62-248-208-88.ngrok-free.app/api/auth';
+import api from './axiosInstance';
 
 export async function registerUser(username: string, password: string) {
   try {
-    const response = await axios.post(`${API_URL}/register`, {
+    const response = await api.post('auth/register', {
       username,
       password,
     });
@@ -18,11 +16,11 @@ export async function registerUser(username: string, password: string) {
 // Login user
 export async function loginUser(username: string, password: string) {
   try {
-    const response = await axios.post(`${API_URL}/login`, {
+    const response = await api.post('auth/login', {
       username,
       password,
     });
-    return response.data; // Returns user info & token
+    return response.data;
   } catch (error) {
     console.error('Login error:', error);
     throw new Error('Failed to log in');
