@@ -20,7 +20,8 @@ export async function register(req: Request, res: Response) {
     // Send the token back to the client
     res.status(201).json({ token });
   } catch (error) {
-    res.status(500).json({ error: 'Registration failed' });
+    console.log(error);
+    res.status(500).json({ error, message: 'Registration failed' });
   }
 }
 

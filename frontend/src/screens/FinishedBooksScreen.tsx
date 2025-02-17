@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const FinishedBooksScreen = () => {
+function FinishedBooksScreen() {
   return (
     <View>
       <Text>FinishedBooksScreen</Text>
     </View>
   );
-};
+}
 
 export default FinishedBooksScreen;
 
