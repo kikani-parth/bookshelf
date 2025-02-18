@@ -1,17 +1,30 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Text, TouchableOpacity } from 'react-native';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import ReadingListScreen from '../screens/ReadingListScreen';
 import FinishedBooksScreen from '../screens/FinishedBooksScreen';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../context/AuthContext';
 
 const Tab = createBottomTabNavigator();
 
 type IconName = 'search' | 'bookmarks' | 'checkmark-done';
 
 export default function BottomTabNavigator() {
+  const { logout } = useAuth();
+
+  async function handleLogout() {
+    await logout();
+  }
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerRight: () => (
+          <TouchableOpacity onPress={handleLogout} style={{ marginRight: 15 }}>
+            <Text style={{ fontSize: 16, color: 'red' }}>Logout</Text>
+          </TouchableOpacity>
+        ),
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
