@@ -19,11 +19,6 @@ import {
 } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-type BookDetailsScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  'BookDetails'
->;
-
 function DiscoverScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();

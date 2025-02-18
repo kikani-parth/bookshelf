@@ -1,14 +1,97 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useBooks } from '../context/BookContext';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
+import BookItem from '../components/BookItem';
+import { useNavigation } from '@react-navigation/native';
 
 function ReadingListScreen() {
+  const { readingList, moveToFinished, removeFromReadingList } = useBooks();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
-    <View>
-      <Text>ReadingListScreen</Text>
+    <View style={styles.container}>
+      {readingList.length === 0 ? (
+        <Text style={styles.emptyText}>Your reading list is empty.</Text>
+      ) : (
+        <FlatList
+          data={readingList}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.bookContainer}>
+              <BookItem
+                item={item}
+                onPress={() =>
+                  navigation.navigate('BookDetails', { book: item })
+                }
+              />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.finishButton}
+                  onPress={() => moveToFinished(item.id)}
+                >
+                  <Text style={styles.buttonText}>Mark as Finished</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.removeButton}
+                  onPress={() => removeFromReadingList(item.id)}
+                >
+                  <Text style={styles.buttonText}>Remove</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 }
 
-export default ReadingListScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  emptyText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  bookContainer: {
+    marginBottom: 30,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  finishButton: {
+    backgroundColor: '#4CAF50',
+    padding: 10,
+    borderRadius: 8,
+    flex: 1,
+    marginRight: 8,
+  },
+  removeButton: {
+    backgroundColor: '#F44336',
+    padding: 10,
+    borderRadius: 8,
+    flex: 1,
+    marginLeft: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
 
-const styles = StyleSheet.create({});
+export default ReadingListScreen;

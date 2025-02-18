@@ -6,6 +6,7 @@ import { useAuth } from './src/context/AuthContext';
 import AuthNavigator from './src/navigation/AuthNavigator';
 import { AuthProvider } from './src/context/AuthContext';
 import AppNavigator from './src/navigation/AppNavigator';
+import { BookProvider } from './src/context/BookContext';
 
 function MainApp() {
   const { token } = useAuth();
@@ -20,7 +21,9 @@ function MainApp() {
 export default function App() {
   return (
     <AuthProvider>
-      <MainApp />
+      <BookProvider>
+        <MainApp />
+      </BookProvider>
     </AuthProvider>
   );
 }
