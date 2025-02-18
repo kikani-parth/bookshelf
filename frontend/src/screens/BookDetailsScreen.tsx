@@ -30,18 +30,18 @@ function BookDetailsScreen() {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.detailsContainer}>
-        {book.coverImage && (
+        {book.cover_image && (
           <Image
             source={
-              book.coverImage ? { uri: book.coverImage } : placeholderImage
+              book.cover_image ? { uri: book.cover_image } : placeholderImage
             }
             style={styles.coverImage}
           />
         )}
         <Text style={styles.title}>{book.title}</Text>
         {book.author && <Text style={styles.author}>By {book.author}</Text>}
-        {book.publishedDate && (
-          <Text style={styles.published}>Published: {book.publishedDate}</Text>
+        {book.published_date && (
+          <Text style={styles.published}>Published: {book.published_date}</Text>
         )}
         {book.description && (
           <Text style={styles.description}>{book.description}</Text>

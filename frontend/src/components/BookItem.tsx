@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Book } from '../types';
 
 const placeholderImage = require('../../assets/book-cover-placeholder.jpg');
@@ -13,13 +13,13 @@ function BookItem({ item, onPress }: BookItemProps) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.bookItem}>
       <Image
-        source={item.coverImage ? { uri: item.coverImage } : placeholderImage}
+        source={item.cover_image ? { uri: item.cover_image } : placeholderImage}
         style={styles.bookImage}
       />
       <View style={styles.bookDetails}>
         <Text style={styles.bookTitle}>{item.title}</Text>
         <Text style={styles.bookAuthor}>{item.author}</Text>
-        <Text style={styles.bookPublished}>{item.publishedDate}</Text>
+        <Text style={styles.bookPublished}>{item.published_date}</Text>
       </View>
     </TouchableOpacity>
   );

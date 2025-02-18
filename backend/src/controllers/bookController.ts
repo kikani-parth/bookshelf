@@ -13,7 +13,7 @@ interface VolumeInfo {
   imageLinks?: {
     thumbnail: string;
   };
-  publishedDate?: string;
+  published_date?: string;
 }
 
 interface Book {
@@ -43,8 +43,8 @@ export async function searchBooks(req: Request, res: Response) {
       title: book.volumeInfo.title,
       author: book.volumeInfo.authors?.join(', '),
       description: book.volumeInfo.description,
-      publishedDate: book.volumeInfo.publishedDate,
-      coverImage: book.volumeInfo.imageLinks?.thumbnail,
+      published_date: book.volumeInfo.published_date,
+      cover_image: book.volumeInfo.imageLinks?.thumbnail,
     }));
 
     res.status(200).json(books);
@@ -59,27 +59,38 @@ export async function addBook(req: Request, res: Response) {
   const { userId } = res.locals.user;
 
   const {
+    id,
     title,
     author,
     description,
-    coverImage,
-    publishedDate,
+    cover_image,
+    published_date,
     status = 'reading',
   } = req.body;
 
-  if (!title || !author) {
+  if (!id || !title || !author) {
     res.status(400).json({ error: 'Title and author are required' });
     return;
   }
 
   try {
     const result = await pool.query(
-      'INSERT INTO books (user_id, title, author, description, cover_image_url, published_date, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [userId, title, author, description, coverImage, publishedDate, status]
+      'INSERT INTO books (id, user_id, title, author, description, cover_image, published_date, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      [
+        id,
+        userId,
+        title,
+        author,
+        description,
+        cover_image,
+        published_date,
+        status,
+      ]
     );
 
     res.status(201).json(result.rows[0]);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Failed to add book' });
   }
 }
@@ -135,6 +146,7 @@ export async function updateBookStatus(req: Request, res: Response) {
 
     res.status(200).json(result.rows[0]);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Failed to update book status' });
   }
 }
@@ -155,6 +167,8 @@ export async function deleteBook(req: Request, res: Response) {
     }
     res.status(200).json({ message: 'Book deleted successfully' });
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({ error: 'Failed to delete book' });
   }
 }

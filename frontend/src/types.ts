@@ -3,6 +3,7 @@ export interface Book {
   title: string;
   author?: string;
   description?: string;
-  publishedDate?: string;
-  coverImage?: string;
+  published_date?: string;
+  cover_image?: string;
+  status?: string;
 }
