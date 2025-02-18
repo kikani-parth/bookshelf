@@ -13,10 +13,7 @@ import { searchBooks } from '../services/bookApi';
 import BookItem from '../components/BookItem';
 import { Book } from '../types';
 import { useNavigation } from '@react-navigation/native';
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
 function DiscoverScreen() {
