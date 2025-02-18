@@ -1,6 +1,7 @@
-import { Alert, StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
+import { Alert, View } from 'react-native';
+import { useAuth } from '../context/AuthContext';
+import AuthForm from '../components/AuthForm';
 
 function LoginScreen({ navigation }: any) {
   const { login } = useAuth();
@@ -10,49 +11,25 @@ function LoginScreen({ navigation }: any) {
   async function handleLogin() {
     try {
       await login(username, password);
-      Alert.alert('Success', 'Logged in successfully!');
     } catch (error: any) {
       Alert.alert('Error', error.message);
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Username:</Text>
-      <TextInput
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-      />
-      <Text>Password:</Text>
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-
-      <Button title="Login" onPress={handleLogin} />
-      <Button
-        title="Don't have an account? Register"
-        onPress={() => navigation.navigate('Register')}
+    <View style={{ paddingTop: 20, flex: 1, marginTop: 50 }}>
+      <AuthForm
+        title="Login"
+        onPress={handleLogin}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        navigationText="Don't have an account?"
+        navigationLink="Register"
       />
     </View>
   );
 }
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-});

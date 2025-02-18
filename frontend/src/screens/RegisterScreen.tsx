@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Alert, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { Alert, View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import AuthForm from '../components/AuthForm';
 
 function RegisterScreen({ navigation }: any) {
   const { register } = useAuth();
@@ -17,43 +18,19 @@ function RegisterScreen({ navigation }: any) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Username:</Text>
-      <TextInput
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-      />
-
-      <Text>Password:</Text>
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-
-      <Button title="Register" onPress={handleRegister} />
-      <Button
-        title="Already have an account? Login"
-        onPress={() => navigation.navigate('Login')}
+    <View style={{ paddingTop: 20, flex: 1, marginTop: 50 }}>
+      <AuthForm
+        title="Register"
+        onPress={handleRegister}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        navigationText="Already have an account?"
+        navigationLink="Login"
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-});
 
 export default RegisterScreen;
