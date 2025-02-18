@@ -12,8 +12,22 @@ import {
 import { searchBooks } from '../services/bookApi';
 import BookItem from '../components/BookItem';
 import { Book } from '../types';
+import { useNavigation } from '@react-navigation/native';
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
+
+type BookDetailsScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'BookDetails'
+>;
 
 function DiscoverScreen() {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,6 +65,10 @@ function DiscoverScreen() {
     }
   };
 
+  const handleBookPress = (book: Book) => {
+    navigation.navigate('BookDetails', { book });
+  };
+
   return (
     <View style={styles.container}>
       {/* Search Bar */}
@@ -74,7 +92,9 @@ function DiscoverScreen() {
           showsVerticalScrollIndicator={false}
           data={defaultBooks}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <BookItem item={item} />}
+          renderItem={({ item }) => (
+            <BookItem item={item} onPress={() => handleBookPress(item)} />
+          )}
         />
       )}
 
@@ -83,7 +103,9 @@ function DiscoverScreen() {
         showsVerticalScrollIndicator={false}
         data={books}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <BookItem item={item} />}
+        renderItem={({ item }) => (
+          <BookItem item={item} onPress={() => handleBookPress(item)} />
+        )}
       />
     </View>
   );
