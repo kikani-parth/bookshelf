@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Book } from '../types';
 import api from '../services/axiosInstance';
 import { useAuth } from './AuthContext';
+import { formatDate } from '../utils/formatDate';
 
 interface IBookContext {
   readingList: Book[];
@@ -28,9 +29,12 @@ export function BookProvider({ children }: { children: ReactNode }) {
     }
     try {
       const response = await api.get(`/books?status=reading`);
-      const books = response.data;
+      const formattedBooks: Book[] = response.data.map((book: Book) => ({
+        ...book,
+        publishedDate: formatDate(book.publishedDate),
+      }));
 
-      setReadingList(response.data);
+      setReadingList(formattedBooks);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -43,9 +47,12 @@ export function BookProvider({ children }: { children: ReactNode }) {
     }
     try {
       const response = await api.get(`/books?status=finished`);
-      const books = response.data;
+      const formattedBooks: Book[] = response.data.map((book: Book) => ({
+        ...book,
+        publishedDate: formatDate(book.publishedDate),
+      }));
 
-      setFinishedBooks(response.data);
+      setFinishedBooks(formattedBooks);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -91,12 +98,17 @@ export function BookProvider({ children }: { children: ReactNode }) {
         author: book.author,
         description: book.description,
         cover_image: book.cover_image,
-        published_date: book.published_date,
+        publishedDate: book.publishedDate,
         status: 'reading',
       });
 
+      // Format the date before adding to state
+      const formattedBook = {
+        ...response.data,
+        publishedDate: formatDate(response.data.publishedDate),
+      };
       // add to reading list
-      setReadingList((prevList) => [...prevList, response.data]);
+      setReadingList((prevList) => [...prevList, formattedBook]);
     } catch (error) {
       console.error('Error adding book:', error);
     }
@@ -111,10 +123,15 @@ export function BookProvider({ children }: { children: ReactNode }) {
       // Remove from reading list
       setReadingList((prev) => prev.filter((b) => b.id !== bookId));
 
+      const formattedBook = {
+        ...response.data,
+        publishedDate: formatDate(response.data.publishedDate),
+      };
+
       // Add to finished books only if not already present
       setFinishedBooks((prev) => {
         const exists = prev.some((b) => b.id === bookId);
-        return exists ? prev : [...prev, response.data];
+        return exists ? prev : [...prev, formattedBook];
       });
     } catch (error) {
       console.error('Error updating book status:', error);

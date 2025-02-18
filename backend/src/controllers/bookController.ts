@@ -13,7 +13,7 @@ interface VolumeInfo {
   imageLinks?: {
     thumbnail: string;
   };
-  published_date?: string;
+  publishedDate?: string;
 }
 
 interface Book {
@@ -43,7 +43,7 @@ export async function searchBooks(req: Request, res: Response) {
       title: book.volumeInfo.title,
       author: book.volumeInfo.authors?.join(', '),
       description: book.volumeInfo.description,
-      published_date: book.volumeInfo.published_date,
+      publishedDate: book.volumeInfo.publishedDate,
       cover_image: book.volumeInfo.imageLinks?.thumbnail,
     }));
 
@@ -64,7 +64,7 @@ export async function addBook(req: Request, res: Response) {
     author,
     description,
     cover_image,
-    published_date,
+    publishedDate,
     status = 'reading',
   } = req.body;
 
@@ -83,7 +83,7 @@ export async function addBook(req: Request, res: Response) {
         author,
         description,
         cover_image,
-        published_date,
+        publishedDate,
         status,
       ]
     );
@@ -111,11 +111,16 @@ export async function getBooks(req: Request, res: Response) {
     const result = await pool.query(query, queryParams);
 
     if (result.rows.length === 0) {
-      res.status(404).json({ error: 'Books not found' });
+      res.status(200).json([]);
       return;
     }
 
-    res.status(200).json(result.rows);
+    const books = result.rows.map((book) => ({
+      ...book,
+      publishedDate: book.published_date,
+    }));
+
+    res.status(200).json(books);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch books' });
   }

@@ -19,7 +19,7 @@ function BookItem({ item, onPress }: BookItemProps) {
       <View style={styles.bookDetails}>
         <Text style={styles.bookTitle}>{item.title}</Text>
         <Text style={styles.bookAuthor}>{item.author}</Text>
-        <Text style={styles.bookPublished}>{item.published_date}</Text>
+        <Text style={styles.bookPublished}>{item.publishedDate}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 20,
     alignItems: 'center',
-    height: 100,
+    height: 110,
 
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },

@@ -53,20 +53,6 @@ function ReadingListScreen() {
                   navigation.navigate('BookDetails', { book: item })
                 }
               />
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.finishButton}
-                  onPress={() => moveToFinished(item.id)}
-                >
-                  <Text style={styles.buttonText}>Mark as Finished</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.removeButton}
-                  onPress={() => removeFromReadingList(item.id)}
-                >
-                  <Text style={styles.buttonText}>Remove</Text>
-                </TouchableOpacity>
-              </View>
             </View>
           )}
         />
@@ -87,30 +73,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bookContainer: {
-    marginBottom: 30,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  finishButton: {
-    backgroundColor: '#4CAF50',
-    padding: 10,
-    borderRadius: 8,
-    flex: 1,
-    marginRight: 8,
-  },
-  removeButton: {
-    backgroundColor: '#F44336',
-    padding: 10,
-    borderRadius: 8,
-    flex: 1,
-    marginLeft: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
 
