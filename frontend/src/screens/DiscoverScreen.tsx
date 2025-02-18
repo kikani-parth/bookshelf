@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,8 +16,24 @@ import { Book } from '../types';
 function DiscoverScreen() {
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [defaultBooks, setDefaultBooks] = useState<Book[]>([]);
+
+  useEffect(() => {
+    async function fetchDefaultBooks() {
+      try {
+        const results = await searchBooks('harrypotter');
+        setDefaultBooks(results);
+      } catch (err) {
+        setError('Failed to load default books');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDefaultBooks();
+  }, []);
 
   const handleSearch = async () => {
     if (!query.trim()) return;
@@ -52,7 +68,17 @@ function DiscoverScreen() {
       {/* Error Message */}
       {error && <Text style={styles.errorText}>{error}</Text>}
 
-      {/* Books List */}
+      {/* Default Books */}
+      {books.length === 0 && (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={defaultBooks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <BookItem item={item} />}
+        />
+      )}
+
+      {/* Searched Books List */}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={books}
