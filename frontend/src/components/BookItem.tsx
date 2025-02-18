@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
 import { Book } from '../types';
 
 const placeholderImage = require('../../assets/book-cover-placeholder.jpg');

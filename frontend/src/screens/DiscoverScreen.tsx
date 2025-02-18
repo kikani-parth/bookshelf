@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   FlatList,
-  Image,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import { searchBooks } from '../services/bookApi';

@@ -1,4 +1,3 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   Text,
@@ -6,6 +5,9 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AuthStackParamList } from '../navigation/types';
 
 interface AuthFormProps {
   title: string;
@@ -28,7 +30,8 @@ function AuthForm({
   navigationText,
   navigationLink,
 }: AuthFormProps) {
-  const navigation: any = useNavigation(); // change this later
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
   return (
     <View style={styles.container}>
@@ -59,7 +62,11 @@ function AuthForm({
 
       <View style={styles.navigationContainer}>
         <Text style={styles.navigationText}>{navigationText}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(navigationLink)}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate(navigationLink as keyof AuthStackParamList)
+          }
+        >
           <Text style={styles.navigationLink}> {navigationLink}</Text>
         </TouchableOpacity>
       </View>

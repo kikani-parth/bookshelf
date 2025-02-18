@@ -1,5 +1,4 @@
 import { createContext, useState, useContext, ReactNode } from 'react';
-import { useEffect } from 'react';
 import { Book } from '../types';
 import api from '../services/axiosInstance';
 import { useAuth } from './AuthContext';

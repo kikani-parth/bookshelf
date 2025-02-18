@@ -3,7 +3,7 @@ import { Alert, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 
-function RegisterScreen({ navigation }: any) {
+function RegisterScreen() {
   const { register } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

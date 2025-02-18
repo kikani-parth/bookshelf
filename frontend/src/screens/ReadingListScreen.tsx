@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ActivityIndicator,
 } from 'react-native';
@@ -14,12 +13,7 @@ import BookItem from '../components/BookItem';
 import { useNavigation } from '@react-navigation/native';
 
 function ReadingListScreen() {
-  const {
-    readingList,
-    moveToFinished,
-    removeFromReadingList,
-    fetchReadingList,
-  } = useBooks();
+  const { readingList, fetchReadingList } = useBooks();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [loading, setLoading] = useState(true);
