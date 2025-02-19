@@ -159,14 +159,18 @@ export async function updateBookStatus(req: Request, res: Response) {
 export async function deleteBook(req: Request, res: Response) {
   const { userId } = res.locals.user;
   const { id } = req.params; // book id
+  console.log(id);
+  console.log(userId);
 
   try {
     const result = await pool.query(
       'DELETE FROM books WHERE id = $1 AND user_id = $2',
       [id, userId]
     );
+    console.log(result);
 
     if (result.rowCount === 0) {
+      console.log('rowCount is zero');
       res.status(404).json({ error: 'Book not found' });
       return;
     }

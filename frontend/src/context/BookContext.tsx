@@ -7,9 +7,9 @@ import { formatDate } from '../utils/formatDate';
 interface IBookContext {
   readingList: Book[];
   finishedBooks: Book[];
-  addToReadingList(book: Book): void;
-  moveToFinished(bookId: string): void;
-  removeFromReadingList(bookId: string): void;
+  addToReadingList(book: Book): Promise<void>;
+  moveToFinished(bookId: string): Promise<void>;
+  removeBook(bookId: string): Promise<void>;
   fetchReadingList(): Promise<void>;
   fetchFinishedBooks(): Promise<void>;
 }
@@ -137,11 +137,12 @@ export function BookProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function removeFromReadingList(bookId: string) {
+  async function removeBook(bookId: string) {
     try {
       await api.delete(`/books/${bookId}`);
 
       setReadingList((prev) => prev.filter((b) => b.id !== bookId));
+      setFinishedBooks((prev) => prev.filter((b) => b.id !== bookId));
     } catch (error) {
       console.error('Error removing book:', error);
     }
@@ -154,7 +155,7 @@ export function BookProvider({ children }: { children: ReactNode }) {
         finishedBooks,
         addToReadingList,
         moveToFinished,
-        removeFromReadingList,
+        removeBook,
         fetchReadingList,
         fetchFinishedBooks,
       }}

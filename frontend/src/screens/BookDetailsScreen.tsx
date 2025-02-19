@@ -25,7 +25,7 @@ function BookDetailsScreen() {
     finishedBooks,
     addToReadingList,
     moveToFinished,
-    removeFromReadingList,
+    removeBook,
   } = useBooks();
 
   // Check if book exists in reading list or finished books
@@ -37,17 +37,18 @@ function BookDetailsScreen() {
     ? 'Mark as Finished'
     : 'Add to Reading List';
 
-  function handleActionButtonPress() {
+  async function handleActionButtonPress() {
     if (isInReadingList) {
-      moveToFinished(book.id);
+      await moveToFinished(book.id);
     } else {
-      addToReadingList(book);
+      await addToReadingList(book);
     }
     navigation.goBack();
   }
 
-  function handleRemoveButtonPress() {
-    removeFromReadingList(book.id);
+  async function handleRemoveButtonPress() {
+    console.log(book.id);
+    await removeBook(book.id);
     navigation.goBack();
   }
 
