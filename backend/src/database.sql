@@ -14,7 +14,7 @@ CREATE TABLE books (
     description TEXT,
     cover_image VARCHAR(255),
     published_date DATE,
-    status VARCHAR(20),
+    status VARCHAR(20) NOT NULL DEFAULT 'reading',
     created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (id, user_id)
 ); 
