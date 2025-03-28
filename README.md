@@ -13,7 +13,7 @@ Bookshelf is a mobile application that helps users track their reading progress.
 - **Responsive UI**: Mobile-first design with smooth navigation
 - **Cross-Platform**: Works on both iOS and Android
 
-## Demo
+## Demo ▶️
 
 ### Authentication
 <img src="https://github.com/user-attachments/assets/3038283e-5a0f-4c13-9243-e34daf259bec" width="200" alt="Registration GIF">
