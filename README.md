@@ -1,8 +1,5 @@
 # Bookshelf - Book Tracking Application 📚
 
-[![PERN Stack](https://img.shields.io/badge/stack-PERN-%2300f.svg?style=flat&logo=postgresql&logoColor=white)](https://postgresql.org)
-[![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)](https://reactnative.dev)
-
 Bookshelf is a mobile application that helps users track their reading progress. Built with the PERN stack (PostgreSQL, Express, React Native, and Node.js) using TypeScript, it allows users to search books, manage reading lists, and track finished books.
 
 ## Features ✨
@@ -70,24 +67,101 @@ JWT_SECRET=your_jwt_secret
 GOOGLE_BOOKS_API_KEY=your_api_key
 ```
 
-### API Reference 🔧
+## API Reference 🔧
 
-**Authentication**
+### Authentication
+
+#### Register a New User
+
+```http
+  POST /api/auth/register
 ```
-POST /api/auth/register - User registration
 
-POST /api/auth/login - User login
+| Parameter  | Type     | Description                                 |
+| :--------- | :------- | :------------------------------------------ |
+| `username` | `string` | **Required**. Required. The user's username |
+| `password` | `string` | **Required**. The user's password           |
+
+
+#### User Login
+
+```http
+  POST /api/auth/login
 ```
 
-**Books**
+| Parameter  | Type     | Description                       |
+| :--------- | :------- | :-------------------------------- |
+| `username` | `string` | **Required**. The user's username |
+| `password` | `string` | **Required**. The user's password |
+
+
+### Books
+
+#### Search Books
+
+```http
+  GET /api/books/search?query={query}
 ```
-GET /api/books/search?query=... - Search books
 
-POST /api/books - Add to reading list
+| Parameter | Type     | Description                              |
+| :-------- | :------- | :--------------------------------------- |
+| `query`   | `string` | **Required**. The search query for books |
 
-GET /api/books - Get user's books
 
-PUT /api/books/:id/status - Update book status
+#### Add a Book to Database
 
-DELETE /api/books/:id - Remove book
+```http
+  POST /api/books
 ```
+
+| Parameter       | Type     | Description                                                                                |
+| :-------------- | :------- | :----------------------------------------------------------------------------------------- |
+| `id`            | `string` | **Required**. The id of the book                                                           |
+| `title`         | `string` | **Required**. The title of the book                                                        |
+| `author`        | `string` | Optional. The author of the book                                                           |
+| `description`   | `string` | Optional. The description of the book                                                      |
+| `cover_image`   | `string` | Optional. The Book's image url                                                             |
+| `publishedDate` | `string` | Optional. The Book's publication date                                                      |
+| `status`        | `string` | Optional. The status of the book (e.g., 'reading', 'finished'). Default status = 'reading' |
+
+
+
+#### Get all Books
+
+```http
+  GET /api/books
+```
+_No parameters required._
+
+#### Get User's Books according to status
+
+```http
+  GET /api/books?status={status}
+```
+
+| Parameter | Type     | Description                                                        |
+| :-------- | :------- | :----------------------------------------------------------------- |
+| `status`  | `string` | **Required**. The status of the book (e.g., 'reading', 'finished') |
+
+
+#### Update Book Status
+
+```http
+  PUT /api/books/{id}/status
+```
+
+| Parameter | Type     | Description                                            |
+| :-------- | :------- | :----------------------------------------------------- |
+| `id`      | `string` | **Required**. The ID of the book to update             |
+| `author`  | `string` | **Required**. New status (e.g., "reading", "finished") |
+
+
+#### Remove a Book
+
+```http
+  DELETE /api/books/{id}
+```
+
+| Parameter | Type     | Description                                |
+| :-------- | :------- | :----------------------------------------- |
+| `id`      | `string` | **Required**. The ID of the book to remove |
