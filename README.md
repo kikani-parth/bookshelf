@@ -13,6 +13,41 @@ Bookshelf is a mobile application that helps users track their reading progress.
 - **Responsive UI**: Mobile-first design with smooth navigation
 - **Cross-Platform**: Works on both iOS and Android
 
+## Demo
+
+### Authentication
+<img src="https://github.com/user-attachments/assets/3038283e-5a0f-4c13-9243-e34daf259bec" width="200" alt="Registration GIF">
+
+_**The user can login/register using just the username and password.**_
+
+<br>
+
+### Add books to Reading List
+<img src="https://github.com/user-attachments/assets/7b81d302-4e63-4aea-9b4e-7c4cf4dec188" width="200" alt="Add books to Reading List GIF">
+
+_**Users can search their favourite books and add them to reading list.**_
+
+<br>
+
+### Mark books as finished
+<img src="https://github.com/user-attachments/assets/2500aef3-be6e-42d7-801b-0f6a5ee69c8b" width="200" alt="Add books to Reading List GIF">
+
+_**The GIF shows the Readng List Screen where users can see all of their books marked as 'reading'. When tapped on a book, users can see the detailed view of that book and mark a book as 'finished'.**_
+
+<br>
+
+### Remove book
+<img src="https://github.com/user-attachments/assets/7b08bf28-5063-43e7-aa3d-4039b036008d" width="200" alt="Add books to Reading List GIF">
+
+_**The user can remove the book from reading list and also from finished reading if needed.**_
+
+<br>
+
+### Re-Login
+<img src="https://github.com/user-attachments/assets/63b707ea-7bee-475a-9552-cfdd815f55a1" width="200" alt="Add books to Reading List GIF">
+
+_**When the user is logged out, the data (reading list and finished reading list) will still persist as the app stores them in a PostgreSQL Database.**_
+
 ## Tech Stack 🛠️
 **Frontend**:
 - React Native (Expo)
